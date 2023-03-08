@@ -70,6 +70,6 @@ Note: If your project requires a database, you can use the included MySQL databa
 
 ## Images
 
-![Landing Page](landing.JPG)
-![Login Page](login.JPG)
-![Sign Up Page](signup.JPG)
+![Landing Page](media/landing.JPG)
+![Login Page](media/login.JPG)
+![Sign Up Page](media/signup.JPG)
