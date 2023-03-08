@@ -29,6 +29,40 @@ git clone https://github.com/RyanMcGrath1/MSU-Shuttle.git
 
 3. Run the program from your IDE.
 
-## Dependencies
+## Requirements
+
+- PHP >= 7.3
+- MySQL >= 5.7
+- JavaScript
+- XAMPP
+
+If you do not have XAMPP installed I have included instructions on installation at the bottom of this page.
 
 
+## Contributors
+
+- **Ryan McGrath**
+- **Carl Nonato**
+- **Jigna Domadia**
+- **Joyce David**
+- **Taegan Maishman**
+
+
+
+## Installing XAMPP
+
+1. Visit the XAMPP website at [https://www.apachefriends.org/index.html](https://www.apachefriends.org/index.html)
+2. Download the appropriate version of XAMPP for your operating system.
+3. Run the installer and follow the instructions provided.
+4. Once the installation is complete, launch XAMPP.
+
+## Including XAMPP into a Project Structure
+
+1. Create a new project folder on your local machine.
+2. Within this folder, create a new subfolder named "htdocs".
+3. Place all files and directories for your project inside the "htdocs" folder.
+4. Open XAMPP and start the Apache server by clicking the "Start" button next to "Apache" in the XAMPP Control Panal.
+5. In your web browser, navigate to **http://localhost/** to verify that the Apache server is running.
+6. To access your project, navigate to **http://localhost/your-project-folder-name/** in your web browser.
+
+Note: If your project requires a database, you can use the included MySQL database in XAMPP. Simply start the MySQL server in the XAMPP Control Panel and use the appropriate MySQL functions in your code to connect to the database.
