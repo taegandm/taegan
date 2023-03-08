@@ -44,6 +44,7 @@ If you do not have XAMPP installed I have included instructions on installation 
 - **Ryan McGrath**
 - **Carl Nonato**
 - **Jigna Domadia**
+- **Briana Spencer**
 - **Joyce David**
 - **Taegan Maishman**
 
