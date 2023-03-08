@@ -66,3 +66,10 @@ If you do not have XAMPP installed I have included instructions on installation 
 6. To access your project, navigate to **http://localhost/your-project-folder-name/** in your web browser.
 
 Note: If your project requires a database, you can use the included MySQL database in XAMPP. Simply start the MySQL server in the XAMPP Control Panel and use the appropriate MySQL functions in your code to connect to the database.
+
+
+## Images
+
+![Landing Page](landing.JPG)
+![Login Page](login.JPG)
+![Sign Up Page](signup.JPG)
