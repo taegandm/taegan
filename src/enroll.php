@@ -1,30 +1,48 @@
-<?php
-$username = $_POST['name'];
-$password = $_POST['password'];
-$account_type = $_POST['account_type'];
-$email = $_POST['email'];
-$phone = $_POST['phone'];
 
-//This would be expanded to accomdate for more roles
-if ($account_type == 'Customer') {
+<!--
+This file is loaded from signup.html.
+The purpose of this file is to catch all the form data submitted during the registration process.
+Once all the data has been collected and inserted into the DB the user should be re-routed to login.html
+-->
+
+
+<?php
+
+$firstName = $_POST['first'];
+$lastName = $_POST['last'];
+$email = $_POST['email'];
+$password = $_POST['password'];
+$phone = $_POST['number'];
+$account_type = $_POST['account'];
+
+//This would be expanded to accommodate for more roles
+if ($account_type == 'Student') {
     $type = 0;
 } else {
     $type = 1;
 }
 
+// This line handles connecting to the Database
+// The parameters are (hostname, username, password, database)
 
+// **IMPORTANT**
+// Unless you connect your IDE to the Database this line and other SQL lines will throw an error
+// This can be safely ignored as they point to unestablished endpoints
 $mysqli = new mysqli('localhost', 'mcgratr1', 'Thompson16!', 'mcgratr1_Test');
 
-//echo mysqli_connect_errno();
 
+
+//echo mysqli_connect_errno();
 if (mysqli_connect_errno()) {
     echo mysqli_connect_error();
     exit;
 }
 
-//ignore error
+// **IMPORTANT**
+// This is the exact syntax you must use for SQL commands
+// First line is the table that's being updated and the column names, second line are the PHP variable values being passed in
 $sql = "INSERT INTO auth_info (username, password, account_type, email, phone)
-VALUES ('$username', '$password', '$type', '$email', '$phone')";
+VALUES ('$firstName', '$password', '$type', '$email', '$phone')";
 
 $result = $mysqli->query($sql);
 $mysqli->close();
@@ -41,6 +59,8 @@ $mysqli->close();
 <body onload="returnHome()">
 
 <script>
+
+//   At this point the database has been updated and the user should be routed back to the login page
     function returnHome(){
         window.location.href = "http://cyan.csam.montclair.edu/~mcgratr1/Final%20Project/src/";
     }
