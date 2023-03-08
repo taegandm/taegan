@@ -22,12 +22,13 @@ if ($account_type == 'Student') {
     $type = 1;
 }
 
-// This line handles connecting to the Database
-// The parameters are (hostname, username, password, database)
+
 
 // **IMPORTANT**
 // Unless you connect your IDE to the Database this line and other SQL lines will throw an error
-// This can be safely ignored as they point to unestablished endpoints
+// You can ignore the error in your IDE however, the paramters should coincide with your hosting service
+// This line handles connecting to the Database
+// The parameters are (hostname, username, password, database)
 $mysqli = new mysqli('localhost', 'mcgratr1', 'Thompson16!', 'mcgratr1_Test');
 
 
