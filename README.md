@@ -1,6 +1,6 @@
 # MSU Shuttle
 
-## Introduction
+## Overview
 
 This website is designed to help users of a university campus track the location and estimated waiting times of campus shuttles in real-time. The site is split into two sections, students and drivers. **_All users must create an account to login and utilize the website._** 
 
