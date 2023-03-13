@@ -46,6 +46,8 @@ if (mysqli_connect_errno()) {
 $sql = "INSERT INTO auth_info (username, password, account_type, email, phone)
 VALUES ('$firstName', '$password', '$type', '$email', '$phone')";
 
+
+// This line is what runs the query against the DB
 $result = $mysqli->query($sql);
 $mysqli->close();
 
