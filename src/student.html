@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html>
+<title>passengerHome</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3pro.css">
+<link rel="stylesheet" href="https://www.w3schools.com/lib/w3-theme-light-blue.css">
+
+<body style="max-width:600px">
+
+<nav class="w3-sidebar w3-bar-block w3-card" id="mySidebar">
+    <div class="w3-container w3-theme-d2">
+        <span onclick="closeSidebar()" class="w3-button w3-display-topright w3-large">X</span>
+        <br>
+        <div class="w3-padding w3-center">
+            <h4>Hello Username</h4>
+        </div>
+    </div>
+    <a class="w3-bar-item w3-button" href="#">Schedule</a>
+    <a class="w3-bar-item w3-button" href="#">Routes</a>
+    <a class="w3-bar-item w3-button" href="#">Map</a>
+    <a class="w3-bar-item w3-button" href="#">Announcements</a>
+    <a class="w3-bar-item w3-button" href="#">Sign Out</a>
+</nav>
+
+<header class="w3-bar w3-card w3-theme">
+    <button class="w3-bar-item w3-button w3-xxxlarge w3-hover-theme" onclick="openSidebar()">&#9776;</button>
+    <h1 class="w3-bar-item">Campus Shuttle</h1>
+</header>
+
+<div class="w3-container">
+    <hr>
+    <div class="w3-cell-row">
+        <div class="w3-cell" style="height:100%">
+            <h3><strong>Campus Map</strong></h3>
+            <img src="https://fcarchitectsinc.com/wp-content/uploads/2017/05/DAS_Montclair-campus-map_Page_1-1024x615.jpg"
+                 style="width:500px;height:250px;">
+        </div>
+
+    </div>
+    <div class="w3-cell w3-container">
+        <h3><strong>Bus Schedule</strong></h3>
+        <table style="width:150%">
+            <tr>
+                <th>Stop</th>
+                <th>Bus #1</th>
+                <th>Bus #2</th>
+                <th>Bus #3</th>
+            </tr>
+            <tr>
+                <td>University</td>
+                <td>6 mins</td>
+                <td>9 mins</td>
+                <td>13 mins</td>
+            </tr>
+            <tr>
+                <td>Redhawk Deck</td>
+                <td>5 mins</td>
+                <td>14 mins</td>
+                <td>17 mins</td>
+            </tr>
+            <tr>
+                <td>Lot 60</td>
+                <td>2 mins</td>
+                <td>8 mins</td>
+                <td>11 mins</td>
+            </tr>
+        </table>
+    </div>
+</div>
+<div>
+    <div class="w3-cell w3-container">
+        <h3><strong>Announcements</strong></h3>
+        <p>Bus #2 delayed 15 minutes.</p>
+    </div>
+</div>
+
+<footer class="w3-container w3-theme w3-margin-top">
+    <h4>Montclair State University Transportation</h4>
+</footer>
+
+<script>
+    closeSidebar();
+
+    function openSidebar() {
+        document.getElementById("mySidebar").style.display = "block";
+    }
+
+    function closeSidebar() {
+        document.getElementById("mySidebar").style.display = "none";
+    }
+</script>
+
+</body>
+
+<style>
+    table, th, td {
+        border: 1px solid black;
+    }
+</style>
+</html>
