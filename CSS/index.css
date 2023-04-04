@@ -20,7 +20,7 @@ header
 }
 header .logo
 {
-    color: #fff;
+    color: #fff; /*Top left logo color */
     text-transform: uppercase;
     cursor: pointer;
 }
@@ -56,22 +56,27 @@ header .logo
     background: #111;
     transition: 0.5s;
     z-index: 2;
+
+    background-image: url("/media/pexels-george-becker-135161.jpg");
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-size: cover;
 }
 .showcase.active
 {
     right: 300px;
 }
 
-.showcase video
-{
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    opacity: 0.8;
-}
+/*.showcase video*/
+/*{*/
+/*    position: absolute;*/
+/*    top: 0;*/
+/*    left: 0;*/
+/*    width: 100%;*/
+/*    height: 100%;*/
+/*    object-fit: cover;*/
+/*    opacity: 0.8;*/
+/*}*/
 .overlay
 {
     position: absolute;
@@ -79,7 +84,7 @@ header .logo
     left: 0;
     width: 100%;
     height: 100%;
-    background: #03a9f4;
+    /*background: #03a9f4;*/ /* This line can be changed to introduce a filter to the image*/
     mix-blend-mode: overlay;
 }
 .text
@@ -204,4 +209,11 @@ header .logo
         -webkit-text-stroke-width: 2px;
         -webkit-text-stroke-color: black;
     }
+}
+
+body {
+    background-image: url("/media/pexels-george-becker-135161.jpg");
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-size: cover;
 }
