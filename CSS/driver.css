@@ -1,7 +1,5 @@
 #logo {
-    max-width: 50px;
-    min-width: 30px;
-    width: 4vw;
+    width: 50px;
     margin-left: 10px;
   }
 
@@ -18,3 +16,36 @@
   .subtitle {
     margin-top: 20px;
   }
+
+  .color-msu {
+    color: #FFFFFF;
+    background-color: #d1190d;
+  }
+
+  .btn-color-msu-scaling {
+    color: #FFFFFF;
+    background-color: #d1190d;
+    font-size: clamp(20px, 2.25vw, 25px);
+  }
+
+  .btn-color-msu {
+    color: #FFFFFF;
+    background-color: #d1190d;
+  }
+
+  .btn-color-msu-scaling:hover {
+  color: #FFFFFF;
+  background-color: #e9392d;
+  border-color: #8ad3d3
+  }
+
+  .btn-color-msu:hover {
+    color: #FFFFFF;
+    background-color: #e9392d;
+    border-color: #8ad3d3
+    }
+
+ .stop-text-size {
+  font-size: clamp(30px, 5vw, 50px);
+  
+ }
