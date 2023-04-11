@@ -6,7 +6,7 @@ $pass = $_POST['pass'];
 // Connect to the database
 $host = "localhost";
 $username = "root";
-$password = "YOUR PASSWORD";
+$password = "YOUR PASSWORD HERE";
 $database = "swe2";
 
 $conn = mysqli_connect($host, $username, $password, $database);
@@ -32,6 +32,8 @@ if (password_verify($pass, $hash)) {
         header('Location: student.html');
     } else if ($account_type == 'Driver') {
         header('Location: driver.html');
+    } else if ($account_type == 'Admin') {
+        header('Location: admin.html');
     } else {
         header('Location: login.html');
     }
