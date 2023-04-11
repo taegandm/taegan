@@ -6,7 +6,7 @@ $pass = $_POST['pass'];
 // Connect to the database
 $host = "localhost";
 $username = "root";
-$password = "YOUR PASSWORD HERE";
+$password = "Thompson16";
 $database = "swe2";
 
 $conn = mysqli_connect($host, $username, $password, $database);

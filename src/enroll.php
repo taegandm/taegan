@@ -5,7 +5,7 @@ $hostname = 'localhost';
 $username = 'root';
 // you must remove your password from this line before committing it to the GitHub Repo
 // Reminder this repo is public so anyone can view your password if you do
-$password = 'YOUR PASSWORD HERE';
+$password = 'Thompson16';
 $database = 'swe2';
 
 // create connection
