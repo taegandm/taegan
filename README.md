@@ -45,12 +45,11 @@ If you do not have XAMPP installed I have included instructions on installation 
 ## Contributors
 
 - **Ryan McGrath**
-- **Carl Nonato**
-- **Jigna Domadia**
+- **Taegan Maishman**
 - **Briana Spencer**
 - **Joyce David**
-- **Taegan Maishman**
-
+- **Carl Nonato**
+- **Jigna Domadia**
 
 
 ## Installing XAMPP
