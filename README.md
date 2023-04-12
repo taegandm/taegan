@@ -37,6 +37,7 @@ git clone https://github.com/RyanMcGrath1/MSU-Shuttle.git
 - MySQL >= 5.7
 - JavaScript
 - XAMPP
+- MySQL
 
 If you do not have XAMPP installed I have included instructions on installation at the bottom of this page.
 
