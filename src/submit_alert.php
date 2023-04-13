@@ -1,6 +1,6 @@
 <?php
     // Include the database connection file
-    include 'db-connect.php';
+    include __DIR__ . "../db_connect.php';
     $conn = OpenCon();
 
     // Get the values submitted from the modal
