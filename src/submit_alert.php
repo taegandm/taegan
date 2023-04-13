@@ -4,18 +4,16 @@
     $conn = OpenCon();
 
     // Get the values submitted from the modal
-    $alertTitle = $_POST['alertTitle'];
-    $alertDetails = $_POST['alertDetails'];
+    $title = $_POST['alertTitle'];
+    $details = $_POST['alertDetails'];
+    $dt = date("m\/d\/y h:i:s");
 
-    // Prepare the SQL statement to insert the data into the alerts table
-    $stmt = $pdo->prepare("INSERT INTO alerts (title, details) VALUES (?, ?)");
-
-    // Bind the parameters to the statement
-    $stmt->bindParam(1, $alertTitle);
-    $stmt->bindParam(2, $alertDetails);
-
-    // Execute the statement
-    $stmt->execute();
+    //create the sql statement to insert into the table
+    $sql = "INSERT INTO alerts (title, details, dt) 
+                VALUES ('$title', '$details', '$dt')";
+        
+    //query the sql statement
+    $result = mysqli_query($conn, $sql);
 
     // Redirect back to the previous page
     header('Location: ' . $_SERVER['HTTP_REFERER']);
