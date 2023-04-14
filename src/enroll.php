@@ -55,7 +55,7 @@ $conn->close();
 
 //   At this point the database has been updated and the user should be routed back to the login page
     function returnHome(){
-        window.location.href = "./login.html";
+        window.location.href = "login.php";
     }
 </script>
 </body>

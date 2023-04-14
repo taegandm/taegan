@@ -33,12 +33,12 @@ if (password_verify($pass, $hash)) {
     } else if ($account_type == 'Driver') {
         header('Location: driver.html');
     } else if ($account_type == 'Admin') {
-        header('Location: admin.html');
+        header('Location: Admin.html');
     } else {
-        header('Location: login.html');
+        header('Location: login.php?error=1');
     }
 } else {
-    header('Location: login.html');
+    header('Location: login.php?error=1');
 }
 
 // Close the database connection
