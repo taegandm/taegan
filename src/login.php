@@ -1,10 +1,4 @@
-<?php
-// Check if the 'error' parameter exists in the URL
-if (isset($_GET['error'])) {
-    // If it does, display an error message
-    echo '<p style="color: red;">Invalid username or password. Please try again.</p>';
-}
-?>
+
 
 <!DOCTYPE html>
 <html lang="en">
@@ -62,6 +56,13 @@ if (isset($_GET['error'])) {
 						<input class="input100" type="password" name="pass">
 						<span class="focus-input100" data-placeholder="Password"></span>
 					</div>
+                    <?php
+                    // Check if the 'error' parameter exists in the URL
+                    if (isset($_GET['error'])) {
+                        // If it does, display an error message
+                        echo '<p style="color: red;">Invalid username or password. Please try again.</p>';
+                    }
+                    ?>
 
 					<div class="container-login100-form-btn">
 						<div class="wrap-login100-form-btn">
