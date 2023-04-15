@@ -2,11 +2,14 @@
     // Include the database connection file
     include __DIR__ . '../db_connect.php';
     $conn = OpenCon();
+    
+    //set default timezone to GMT
+    date_default_timezone_set('America/New_York');
 
     // Get the values submitted from the modal
     $title = $_POST['alertTitle'];
     $details = $_POST['alertDetails'];
-    $dt = date("m\/d\/y h:i:s");
+    $dt = date("m\/d\/y   g:i a");
 
     //create the sql statement to insert into the table
     $sql = "INSERT INTO alerts (title, details, dt) 
