@@ -1,7 +1,9 @@
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
-	<title>Welcome</title>
+	<title>Login</title>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 <!--===============================================================================================-->	
@@ -54,6 +56,13 @@
 						<input class="input100" type="password" name="pass">
 						<span class="focus-input100" data-placeholder="Password"></span>
 					</div>
+                    <?php
+                    // Check if the 'error' parameter exists in the URL
+                    if (isset($_GET['error'])) {
+                        // If it does, display an error message
+                        echo '<p style="color: red;">Invalid username or password. Please try again.</p>';
+                    }
+                    ?>
 
 					<div class="container-login100-form-btn">
 						<div class="wrap-login100-form-btn">
