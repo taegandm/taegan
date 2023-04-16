@@ -9,15 +9,16 @@
         integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous">
     <link href="https://cdn.jsdelivr.net/gh/gitbrent/bootstrap4-toggle@3.6.1/css/bootstrap4-toggle.min.css"
         rel="stylesheet">
-    <link href="http://localhost/MSU-Shuttle-briana/CSS/student.css" rel="stylesheet" type="text/css" />
+    <link href="../CSS/student.css" rel="stylesheet" type="text/css" />
 </head>
 
 <body>
     <nav class="navbar navbar-expand-lg navbar-dark sticky-top" style="background-color: #d1190d;">
         <div class="container-fluid">
             <a class="navbar-brand" href="#hero-target"><img id="logo"
-                    src="http://localhost/MSU-Shuttle-briana/media/msu.png" alt="MSU Logo"></a>
-            <span class="navbar-brand mb-0 h1 header-text display-1">Student Home</span>
+                    src="../media/msu.png" alt="MSU Logo"></a>
+            <span class="navbar-brand mb-0 h1 header-text display-1" id="title" style="font-weight: bold; font-size: 42px;">Student
+                Home</span>
             <button type="button" class="btn btn-danger">Logout</button>
         </div>
     </nav>
@@ -27,16 +28,53 @@
         <div class="row">
             <div class="col">
                 <h3><strong>Campus Map</strong></h3>
-                <img id="map" src="/MSU-Shuttle-briana/media/map.png">
+                <img id="map" src="../media/map.png">
             </div>
-
+            <hr>
         </div>
         <div class="row">
             <h3><strong>Bus Schedule</strong></h3>
             <div class="table-responsive">
-                <iframe class="table table-bordered table-striped" src="schedule.php"></iframe>
+                <div id="schedule-container"></div>
             </div>
-        <div>
+        </div>
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+        <script>
+            $(document).ready(function () {
+                // Define a function to update the schedule
+                function updateSchedule() {
+                    $("#schedule-container").load("schedule.php");
+                }
+
+                // Call the function immediately on page load
+                updateSchedule();
+
+                // Set up an interval to call the function every 10 seconds
+                setInterval(updateSchedule, 2000);
+            });
+        </script>
+        <hr>
+        <div class="row">
+            <h3><strong>Routes</strong></h3>
+            <div class="table-responsive">
+                <div id="route-container"></div>
+            </div>
+        </div>
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+        <script>
+            $(document).ready(function () {
+                // Define a function to update the schedule
+                function updateRoute() {
+                    $("#route-container").load("studentRoute.php");
+                }
+
+                // Call the function immediately on page load
+                updateRoute();
+
+                // Set up an interval to call the function every 10 seconds
+                setInterval(updateRoute, 2000);
+            });
+        </script>   
             <div class="row">
                 <h3><strong>Announcements</strong></h3>
                 <div class="alert alert-info" role="alert">
