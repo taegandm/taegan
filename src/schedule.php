@@ -11,9 +11,10 @@
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 
 <table class="table">
-  <thead>
+  <thead class = "table table-striped thead-dark">
     <tr>
       <th scope="col">Bus #</th>
+      <th scope="col">Route</th>
       <th scope="col">Current Stop</th>
       <th scope="col">Next Stop</th>
       <th scope="col">Wait Time</th>
@@ -23,12 +24,16 @@
     <?php
     include 'db_connect.php';
     $conn = OpenCon();
-    $sql = "SELECT * FROM schedule";
+    $sql = "SELECT busNum, currentStop, nextStop, IF(waitTime = 0, '-', waitTime) AS waitTime, route
+FROM schedule;
+";
+    
     $result = $conn->query($sql);
     if ($result->num_rows > 0) {
       while ($row = $result->fetch_assoc()) {
         echo '<tr>
                 <th scope="row">' . $row["busNum"] . '</th>
+                <td>' . $row["route"] . '</td>
                 <td>' . $row["currentStop"] . '</td>
                 <td>' . $row["nextStop"] . '</td>
                 <td>' . $row["waitTime"] . ' minutes</td>
@@ -41,4 +46,3 @@
     ?>
   </tbody>
 </table>
-
