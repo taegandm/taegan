@@ -92,7 +92,8 @@
           <div class="container-fluid ms-auto">
             <div class="row gx-3 px-5 text-wrap align-middle subtitle mb-3">
               <form action="driver_submit.php" method="POST" id="register-form">
-                <input type="hidden" id="route" value="">
+                <input type="hidden" id="busNumber-submit" name="busNumber" value="">
+                <input type="hidden" id="route-submit" name="route" value="">
                 <button type="submit" class="btn btn-color-msu btn-lg btn-block">Submit</button>
               </form>
             </div>
@@ -119,10 +120,11 @@
         route = choice;
 
         //send data into hidden input field so it is accessible in driver_submit.php
-        document.getElementById("route").value = route;
+        document.getElementById("route-submit").value = route;
       }
     
       registerForm.addEventListener("submit", (event) => {
+        document.getElementById("busNumber-submit").value = bus.value;
         if (bus.value == "" || route == -1) {
           event.preventDefault();
           alert("Please fill in both fields");

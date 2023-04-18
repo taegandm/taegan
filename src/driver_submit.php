@@ -13,7 +13,7 @@ VALUES ('$bus_number', '$route')";
 //query the sql statement
 $result = mysqli_query($conn, $sql);
 
-CloseCon($Conn);
+CloseCon($conn);
 ?>
 
 <!DOCTYPE html>
