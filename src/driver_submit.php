@@ -3,7 +3,15 @@
 include __DIR__ . '../db_connect.php';
 $conn = OpenCon();
 
+$bus_number = $_POST['busNumber'];
+$route = $_POST['route'];
 
+//create the sql statement to insert into the table
+$sql = "INSERT INTO current_buses (bus_number, `route`) 
+VALUES ('$bus_number', '$route')";
+
+//query the sql statement
+$result = mysqli_query($conn, $sql);
 
 CloseCon($Conn);
 ?>
