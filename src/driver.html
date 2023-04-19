@@ -9,12 +9,12 @@
     <link href="https://cdn.jsdelivr.net/gh/gitbrent/bootstrap4-toggle@3.6.1/css/bootstrap4-toggle.min.css" rel="stylesheet">
     <link href="..\CSS\driver.css" rel="stylesheet" type="text/css"/>
 </head>
-<body>
+<body onbeforeunload="logout()">
     <nav class="navbar navbar-dark sticky-top color-msu">
         <div class="container-fluid">
           <a class="navbar-brand display-1 header-text" href="#"><img id="logo" src="..\media\msu.png" alt="MSU Logo">Driver Home</a>
           <div class="navbar-nav">
-            <a class="nav-item nav-link" href="#">Logout</a>
+            <a class="nav-item nav-link" href="driver_logout.php">Logout</a>
           </div>       
         </div>
       </nav>
