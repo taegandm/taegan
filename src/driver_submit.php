@@ -13,6 +13,9 @@ VALUES ('$bus_number', '$route')";
 //query the sql statement
 $result = mysqli_query($conn, $sql);
 
+session_start();
+$_SESSION['busNumber'] = $bus_number;
+
 CloseCon($conn);
 ?>
 
