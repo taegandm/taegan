@@ -30,7 +30,7 @@ CloseCon($conn);
 <script>
 //   At this point the database has been updated and the user should be routed back to the login page
     function redirect_to_driver_home(){
-        window.location.href = "driver.html";
+        window.location.href = "driver.php";
     }
 </script>
 </body>
