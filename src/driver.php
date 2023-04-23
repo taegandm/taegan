@@ -1,3 +1,16 @@
+<?php
+  session_start();
+  $bus_number = $_SESSION['bus_number'];
+  session_destroy();
+?>
+
+<script>
+  function startup() {
+    var bus_number = "<?php echo $bus_number ?>";
+    document.getElementById("bus_number_current").value = bus_number;
+  }
+</script>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -9,12 +22,16 @@
     <link href="https://cdn.jsdelivr.net/gh/gitbrent/bootstrap4-toggle@3.6.1/css/bootstrap4-toggle.min.css" rel="stylesheet">
     <link href="..\CSS\driver.css" rel="stylesheet" type="text/css"/>
 </head>
-<body onbeforeunload="logout()">
+
+<body onload="startup()">
     <nav class="navbar navbar-dark sticky-top color-msu">
         <div class="container-fluid">
           <a class="navbar-brand display-1 header-text" href="#"><img id="logo" src="..\media\msu.png" alt="MSU Logo">Driver Home</a>
           <div class="navbar-nav">
-            <a class="nav-item nav-link" href="driver_logout.php">Logout</a>
+            <form method="post" action="driver_logout.php" id="logout-form">
+              <input type="hidden" id="bus_number_current" name="bus_number" value="">
+              <button type="submit" class="btn btn-link btn-color-msu">Logout</button>
+            </form>
           </div>       
         </div>
       </nav>
@@ -61,6 +78,7 @@
                       </div>
                   </div>
                 </div>
+
                 <div class="row subtitle">
                   <!--View Alert Section-->
                   <div class="col-2"></div>
@@ -112,9 +130,9 @@
         </div>
       </section>
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe" crossorigin="anonymous"></script>
-
+      <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe" crossorigin="anonymous"></script>
     <script>
+
       const alertForm = document.getElementById("alert-form");
       const alertTitleInput = document.getElementById("alertTitle");
       const alertDetailsInput = document.getElementById("alertDetails");

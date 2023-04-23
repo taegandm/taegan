@@ -14,7 +14,7 @@ VALUES ('$bus_number', '$route')";
 $result = mysqli_query($conn, $sql);
 
 session_start();
-$_SESSION['busNumber'] = $bus_number;
+$_SESSION['bus_number'] = $bus_number;
 
 CloseCon($conn);
 ?>
@@ -30,7 +30,7 @@ CloseCon($conn);
 <script>
 //   At this point the database has been updated and the user should be routed back to the login page
     function redirect_to_driver_home(){
-        window.location.href = "driver.html";
+        window.location.href = "driver.php";
     }
 </script>
 </body>

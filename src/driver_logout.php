@@ -1,18 +1,16 @@
 <?php
-// Include the database connection file
-include __DIR__ . '../db_connect.php';
-$conn = OpenCon();
+    // Include the database connection file
+    include __DIR__ . '../db_connect.php';
+    $conn = OpenCon();
+    $bus_number = $_POST['bus_number'];
 
-//start session to access bus number in logout
-session_start();
-$bus_number = $_SESSION['bus_number'];
+    //create the sql statement to remove from the table
+    $sql = "DELETE FROM current_buses WHERE bus_number = '$bus_number'";
 
-//create the sql statement to remove from the table
-$sql = "DELETE FROM current_buses WHERE bus_number = '$bus_number'";
+    mysqli_query($conn, $sql);
+    unset($_SESSION['bus_number']);
 
-mysqli_query($conn, $sql);
-
-CloseCon($conn);
+    CloseCon($conn);
 ?>
 
 <!DOCTYPE html>
@@ -21,7 +19,7 @@ CloseCon($conn);
     <meta charset="UTF-8">
     <title></title>
 </head>
-<body onload="redirect_to_driver_home()">
+<body onload="redirect_to_homepage()">
 
 <script>
 //   At this point the database has been updated and the user should be routed back to the login page
