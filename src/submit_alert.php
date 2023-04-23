@@ -2,7 +2,13 @@
     // Include the database connection file
     include __DIR__ . '../db_connect.php';
     $conn = OpenCon();
-    
+
+    //store current bus information for retrieval
+    session_start();
+    $_SESSION['bus_number'] = $_POST["bus_number"];
+    $_SESSION['route'] = $_POST["route"];
+    $_SESSION['starting_stop'] = $_POST["starting_stop"];
+
     //set default timezone to GMT
     date_default_timezone_set('America/New_York');
 
@@ -19,7 +25,22 @@
     $result = mysqli_query($conn, $sql);
 
     // Redirect back to the previous page
-    header('Location: ' . $_SERVER['HTTP_REFERER']);
     CloseCon($conn);
-    exit();
 ?>
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body onload="redirect_to_driver_home()">
+
+<script>
+//   At this point the database has been updated and the user should be routed back to the login page
+    function redirect_to_driver_home(){
+        window.location.href = "driver.php";
+    }
+</script>
+</body>
+</html>

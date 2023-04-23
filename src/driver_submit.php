@@ -15,6 +15,8 @@ $result = mysqli_query($conn, $sql);
 
 session_start();
 $_SESSION['bus_number'] = $bus_number;
+$_SESSION['route'] = $route;
+$_SESSION['starting_stop'] = 0;
 
 CloseCon($conn);
 ?>
