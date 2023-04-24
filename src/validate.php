@@ -29,7 +29,7 @@ if (password_verify($pass, $hash)) {
     if ($account_type == 'Student') {
         header('Location: student.html');
     } else if ($account_type == 'Driver') {
-        header('Location: driver.html');
+        header('Location: driver_login.php');
     } else if ($account_type == 'Admin') {
         header('Location: Admin.html');
     } else {
