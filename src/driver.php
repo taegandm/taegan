@@ -6,6 +6,45 @@
   $bus_number = $_SESSION['bus_number'];
   $route = $_SESSION['route'];
   $starting_stop = $_SESSION['starting_stop'];
+
+  $conn = OpenCon();
+
+  // Build the MySQL query
+  $query = "SELECT * FROM routes WHERE route_number = $route";
+
+  // Execute the query and retrieve the result set
+  $result = mysqli_query($conn, $query);
+
+  // Get the first row of the result set
+  $row = mysqli_fetch_assoc($result);
+
+  // Initialize an array to hold the stop columns
+  $columns = [];
+
+  // Initialize an array to hold the retrieved data
+  $data = [];
+
+  // Iterate through the row's columns until a NULL value is encountered
+  foreach ($row as $key => $value) {
+      // Skip the 'route_number' column
+      if ($key === 'route_number') {
+          continue;
+      }
+
+      // Stop iterating if a NULL value is encountered
+      if ($value === null) {
+          break;
+      }
+
+      // Add the column value to the array
+      $data[] = $value;
+    }
+    
+    // Encode the PHP array as a JSON string
+    $json_data = json_encode($data);
+
+    // Output the JSON string to your JavaScript code
+    echo '<script>var stops = ' . $json_data . ';</script>';
 ?>
 
 <!DOCTYPE html>
@@ -84,7 +123,7 @@
                   <h5 id="current-title" class="display-6 text-center stop-text-size pb-2 subtitle">Recent Alerts</h5>
                   <div class="col-1"></div>
                   <div class="col-10">
-                    <table class="table table-striped table-bordered">
+                    <table id="alerts-table" class="table table-striped table-bordered">
                       <thead>
                         <tr>
                           <th scope="col">Title</th>
@@ -93,35 +132,7 @@
                         </tr>
                       </thead>
                       <tbody>
-                        <?php
-                        // Connect to the database
-                        $conn = OpenCon();
-
-                        // Check connection
-                        if ($conn->connect_error) {
-                            die("Connection failed: " . $conn->connect_error);
-                        }
-
-                        // Execute the SQL query
-                        $sql = "SELECT title, details, dt FROM alerts ORDER BY id DESC LIMIT 5";
-                        $result = $conn->query($sql);
-
-                        // Display the results in an HTML table
-                        if ($result->num_rows > 0) {
-                            while ($row = $result->fetch_assoc()) {
-                                echo "<tr>";
-                                echo "<td>" . $row["title"] . "</td>";
-                                echo "<td>" . $row["details"] . "</td>";
-                                echo "<td>" . $row["dt"] . "</td>";
-                                echo "</tr>";
-                            }
-                        } else {
-                            echo "<tr><td colspan='3'>No results found.</td></tr>";
-                        }
-
-                        // Close the database connection
-                        CloseCon($conn);
-                        ?>
+                        <!-- The table body will be updated dynamically -->
                       </tbody>
                     </table>
                   </div>
@@ -158,6 +169,10 @@
       var current_counter;
       var next_counter;
 
+      //switch current and next stop
+      var change_stop = 0;
+      const num_stops = stops.length;
+
       //save bus number to a hidden input box on the page, that way the 
       //$bus_number variable can change to accomodate multiple bus drivers
       function startup() {
@@ -176,16 +191,26 @@
         current_counter = parseInt(document.getElementById("starting_stop_current").value);
         next_counter = current_counter + 1;
 
+        //make sure counters stay in stop range
+        if(current_counter >= num_stops) {
+          current_counter = 0;
+          next_counter = 1;
+        }
+
+        if(next_counter >= num_stops) {
+          next_counter = 0;
+        }
+
         //set initial stops
         current_stop.textContent = stops[current_counter];
         next_stop.textContent = stops[next_counter];
+        alert(stops[current_counter]);
+        alert(stops[next_counter]);
+
+        //get initial alerts
+        updateAlerts();
       }
 
-      var stops = ["Stop 1", "Stop 2", "Stop 3", "Stop 4", "Stop 5", "Stop 6"];
-      //switch current and next stop
-      var change_stop = 0;
-
-      const num_stops = stops.length;
       function switchStop() {
         //if toggled
         if(change_stop) 
@@ -204,10 +229,10 @@
           current_counter++;
           next_counter++;
           stop_button.textContent = "Arrived at Stop";
-          if(current_counter == num_stops - 1) {
+          if(current_counter == num_stops) {
             current_counter = 0;
           }
-          if(next_counter == num_stops - 1) {
+          if(next_counter == num_stops) {
             next_counter = 0;
           }
           change_stop = 1;
@@ -225,10 +250,40 @@
         }
       });
 
-      window.addEventListener('beforeunload', function (e) {
-        e.preventDefault();
-        e.returnValue = 'Are you sure you want to leave this page? Your changes may be lost.';
-      });
+      // Define the function that updates the table
+      function updateAlerts() {
+        // Send an AJAX request to fetch the data
+        var xmlhttp = new XMLHttpRequest();
+        xmlhttp.onreadystatechange = function() {
+          if (this.readyState == 4 && this.status == 200) {
+            // Parse the JSON response
+            var data = JSON.parse(this.responseText);
+
+            // Build the HTML for the table body
+            var tbodyHtml = "";
+            for (var i = 0; i < data.length; i++) {
+              tbodyHtml += "<tr>";
+              tbodyHtml += "<td>" + data[i].title + "</td>";
+              tbodyHtml += "<td>" + data[i].details + "</td>";
+              tbodyHtml += "<td>" + data[i].dt + "</td>";
+              tbodyHtml += "</tr>";
+            }
+
+            // Update the table body
+            document.getElementById("alerts-table").getElementsByTagName("tbody")[0].innerHTML = tbodyHtml;
+          }
+        };
+        xmlhttp.open("GET", "get_alerts.php", true);
+        xmlhttp.send();
+      }
+
+      // Update the table every 5 seconds
+      setInterval(updateAlerts, 5000);
+
+      //window.addEventListener('beforeunload', function (e) {
+        //e.preventDefault();
+        //e.returnValue = 'Are you sure you want to leave this page? Your changes may be lost.';
+      //});
     </script>
 </body>
 </html>
