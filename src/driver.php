@@ -204,8 +204,6 @@
         //set initial stops
         current_stop.textContent = stops[current_counter];
         next_stop.textContent = stops[next_counter];
-        alert(stops[current_counter]);
-        alert(stops[next_counter]);
 
         //get initial alerts
         updateAlerts();
