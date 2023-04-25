@@ -110,7 +110,7 @@
                             </div>
                             <div class="modal-footer">
                               <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                              <button type="submit" class="btn btn-primary">Save changes</button>
+                              <button type="submit" class="btn btn-color-msu">Submit Alert</button>
                             </div>
                           </form>
                         </div>
