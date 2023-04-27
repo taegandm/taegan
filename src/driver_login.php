@@ -46,41 +46,89 @@
               </div>
             </div>
             <div class="row g-2 text-wrap align-middle">
-              <table class="table">
-                <thead class="thead-dark">
-                  <tr>
-                    <th class="col-1 text-center" scope="col">Route</th>
-                    <th class="col-11" scope="col">Stops</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr>
-                    <th class="text-center" scope="row">1</th>
-                    <td>University Hall - Lot 60 - Transit</td>
-                  </tr>
-                  <tr>
-                    <th class="text-center" scope="row">2</th>
-                    <td>The Village - Lot 60 - Transit</td>
-                  </tr>
-                  <tr>
-                    <th class="text-center" scope="row">3</th>
-                    <td>Russ Hall - Red Hawk Deck - University - Lot 60</td>
-                  </tr>
-                  <tr>
-                    <th class="text-center" scope="row">4</th>
-                    <td>All Campus</td>
-                  </tr>
-                </tbody>
+              <table id="route-table" class="table table-striped table-bordered text-center">
+                <?php
+                include __DIR__ . '../db_connect.php';
+
+                // Create connection
+                $conn = OpenCon();
+
+                // Check connection
+                if (!$conn) {
+                  die("Connection failed: " . mysqli_connect_error());
+                }
+
+                // SQL query to retrieve data from "routes" table
+                $sql = "SELECT * FROM routes";
+
+                // Execute query and store result
+                $result = mysqli_query($conn, $sql);
+
+                // Check if result contains any rows
+                if (mysqli_num_rows($result) > 0) {
+                  // Output table header
+                  echo "<tr><th>Route Number</th><th>Stop 1</th><th>Stop 2</th><th>Stop 3</th><th>Stop 4</th></tr>";
+                  
+                  // Loop through rows of result and output data in table rows
+                  while($row = mysqli_fetch_assoc($result)) {
+                    // Output a new row for each route
+                    echo "<tr>";
+                    
+                    // Output the route ID
+                    echo "<td>".$row["route_number"]."</td>";
+
+                    // Determine the number of stop columns by counting the number of columns in the row and subtracting 2 (for the "id" and "route_number" columns)
+                    $num_stops = mysqli_num_fields($result) - 1;
+                    
+                    // Loop through the "stop" columns and output each stop until a null value is reached or all stops have been output
+                    for ($i = 1; $i <= $num_stops; $i++) {
+                      $stop = "stop".$i;
+                      if ($row[$stop] != null) {
+                        echo "<td>".$row[$stop]."</td>";
+                      } else {
+                        break;
+                      }
+                    }
+                    
+                    // Output the closing tag for the row
+                    echo "</tr>";
+                  }
+                  
+                } else {
+                  echo "No routes found.";
+                }
+                ?>
               </table>
             </div>
             <div class="row g-2 text-wrap align-middle">
               <div id="route-col" class="col-12 col-md-6 p-2">
                 <div class="btn-toolbar" role="toolbar" aria-label="Toolbar with button groups">
                   <div class="btn-group mr-2" role="group" aria-label="First group">
-                    <button type="button" onClick="choose(1)" class="btn btn-danger">Route 1</button>
-                    <button type="button" onClick="choose(2)" class="btn btn-danger">Route 2</button>
-                    <button type="button" onClick="choose(3)" class="btn btn-danger">Route 3</button>
-                    <button type="button" onClick="choose(4)" class="btn btn-danger">Route 4</button>
+                    <?php
+                    // Create connection
+                    $conn = OpenCon();
+
+                    // Check connection
+                    if (!$conn) {
+                      die("Connection failed: " . mysqli_connect_error());
+                    }
+
+                    // SQL query to retrieve data from "routes" table
+                    $sql = "SELECT route_number FROM routes";
+
+                    // Execute query and store result
+                    $result = mysqli_query($conn, $sql);
+
+                    // Check if result contains any rows
+                    if (mysqli_num_rows($result) > 0) {
+                      // Loop through rows of result and output data in table rows
+                      while($row = mysqli_fetch_assoc($result)) {
+                        echo '<td><button type="button" onClick="choose('.$row["route_number"].')" class="btn btn-danger">Route '.$row["route_number"].'</button></td>';
+                      }
+                    }
+                    // Close connection
+                    CloseCon($conn);
+                    ?>
                   </div>
                 </div>
               </div>

@@ -57,6 +57,7 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous">
     <link href="https://cdn.jsdelivr.net/gh/gitbrent/bootstrap4-toggle@3.6.1/css/bootstrap4-toggle.min.css" rel="stylesheet">
     <link href="..\CSS\driver.css" rel="stylesheet" type="text/css"/>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </head>
 
 <body onload="startup()" >
@@ -155,6 +156,11 @@
 
       <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe" crossorigin="anonymous"></script>
     <script>
+      //variables to store bus information
+      var bus_number;
+      var route;
+      var starting_stop;
+
       //get the alert form, as well as the text sections for title and details
       const alertForm = document.getElementById("alert-form");
       const alertTitleInput = document.getElementById("alertTitle");
@@ -177,9 +183,9 @@
       //$bus_number variable can change to accomodate multiple bus drivers
       function startup() {
         //save php variables into a javascript variable
-        var bus_number = "<?php echo $bus_number ?>";
-        var route = "<?php echo $route ?>";
-        var starting_stop = "<?php echo $starting_stop ?>";
+        bus_number = "<?php echo $bus_number ?>";
+        route = "<?php echo $route ?>";
+        starting_stop = "<?php echo $starting_stop ?>";
 
         //insert into the hiddent input boxes
         document.getElementById("bus_number_current").value = bus_number;
@@ -207,6 +213,7 @@
 
         //get initial alerts
         updateAlerts();
+        bus_in_transit(bus_number, stops[current_counter], stops[next_counter]);
       }
 
       function switchStop() {
@@ -218,6 +225,7 @@
           next_stop.textContent = stops[next_counter];
           stop_button.textContent = "In Transit";
           change_stop = 0;
+          bus_in_transit();
         } 
         
         //if untoggled
@@ -234,6 +242,7 @@
             next_counter = 0;
           }
           change_stop = 1;
+          bus_arrived();
         }
       }
 
@@ -278,10 +287,43 @@
       // Update the table every 5 seconds
       setInterval(updateAlerts, 5000);
 
-      //window.addEventListener('beforeunload', function (e) {
-        //e.preventDefault();
-        //e.returnValue = 'Are you sure you want to leave this page? Your changes may be lost.';
-      //});
+      function bus_in_transit()
+      {
+        $.ajax({
+          type: 'POST',
+          url: 'bus_in_transit.php',
+          data: {
+            bus_number: bus_number,
+            current_stop: stops[current_counter],
+            next_stop: stops[next_counter],
+            arrived: 0
+          },
+          success: function(response) {
+            console.log(response);
+          },
+          error: function(xhr, status, error) {
+            console.error(xhr.responseText);
+          }
+        });
+      }
+
+      function bus_arrived()
+      {
+        $.ajax({
+          type: 'POST',
+          url: 'bus_arrived.php',
+          data: {
+            bus_number: bus_number,
+            arrived: 1
+          },
+          success: function(response) {
+            console.log(response);
+          },
+          error: function(xhr, status, error) {
+            console.error(xhr.responseText);
+          }
+        });
+      }
     </script>
 </body>
 </html>
