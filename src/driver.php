@@ -6,6 +6,45 @@
   $bus_number = $_SESSION['bus_number'];
   $route = $_SESSION['route'];
   $starting_stop = $_SESSION['starting_stop'];
+
+  $conn = OpenCon();
+
+  // Build the MySQL query
+  $query = "SELECT * FROM routes WHERE route_number = $route";
+
+  // Execute the query and retrieve the result set
+  $result = mysqli_query($conn, $query);
+
+  // Get the first row of the result set
+  $row = mysqli_fetch_assoc($result);
+
+  // Initialize an array to hold the stop columns
+  $columns = [];
+
+  // Initialize an array to hold the retrieved data
+  $data = [];
+
+  // Iterate through the row's columns until a NULL value is encountered
+  foreach ($row as $key => $value) {
+      // Skip the 'route_number' column
+      if ($key === 'route_number') {
+          continue;
+      }
+
+      // Stop iterating if a NULL value is encountered
+      if ($value === null) {
+          break;
+      }
+
+      // Add the column value to the array
+      $data[] = $value;
+    }
+    
+    // Encode the PHP array as a JSON string
+    $json_data = json_encode($data);
+
+    // Output the JSON string to your JavaScript code
+    echo '<script>var stops = ' . $json_data . ';</script>';
 ?>
 
 <!DOCTYPE html>
@@ -18,6 +57,7 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous">
     <link href="https://cdn.jsdelivr.net/gh/gitbrent/bootstrap4-toggle@3.6.1/css/bootstrap4-toggle.min.css" rel="stylesheet">
     <link href="..\CSS\driver.css" rel="stylesheet" type="text/css"/>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </head>
 
 <body onload="startup()" >
@@ -71,7 +111,7 @@
                             </div>
                             <div class="modal-footer">
                               <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                              <button type="submit" class="btn btn-primary">Save changes</button>
+                              <button type="submit" class="btn btn-color-msu">Submit Alert</button>
                             </div>
                           </form>
                         </div>
@@ -84,7 +124,7 @@
                   <h5 id="current-title" class="display-6 text-center stop-text-size pb-2 subtitle">Recent Alerts</h5>
                   <div class="col-1"></div>
                   <div class="col-10">
-                    <table class="table table-striped table-bordered">
+                    <table id="alerts-table" class="table table-striped table-bordered">
                       <thead>
                         <tr>
                           <th scope="col">Title</th>
@@ -93,35 +133,7 @@
                         </tr>
                       </thead>
                       <tbody>
-                        <?php
-                        // Connect to the database
-                        $conn = OpenCon();
-
-                        // Check connection
-                        if ($conn->connect_error) {
-                            die("Connection failed: " . $conn->connect_error);
-                        }
-
-                        // Execute the SQL query
-                        $sql = "SELECT title, details, dt FROM alerts ORDER BY id DESC LIMIT 5";
-                        $result = $conn->query($sql);
-
-                        // Display the results in an HTML table
-                        if ($result->num_rows > 0) {
-                            while ($row = $result->fetch_assoc()) {
-                                echo "<tr>";
-                                echo "<td>" . $row["title"] . "</td>";
-                                echo "<td>" . $row["details"] . "</td>";
-                                echo "<td>" . $row["dt"] . "</td>";
-                                echo "</tr>";
-                            }
-                        } else {
-                            echo "<tr><td colspan='3'>No results found.</td></tr>";
-                        }
-
-                        // Close the database connection
-                        CloseCon($conn);
-                        ?>
+                        <!-- The table body will be updated dynamically -->
                       </tbody>
                     </table>
                   </div>
@@ -144,6 +156,11 @@
 
       <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe" crossorigin="anonymous"></script>
     <script>
+      //variables to store bus information
+      var bus_number;
+      var route;
+      var starting_stop;
+
       //get the alert form, as well as the text sections for title and details
       const alertForm = document.getElementById("alert-form");
       const alertTitleInput = document.getElementById("alertTitle");
@@ -158,13 +175,17 @@
       var current_counter;
       var next_counter;
 
+      //switch current and next stop
+      var change_stop = 0;
+      const num_stops = stops.length;
+
       //save bus number to a hidden input box on the page, that way the 
       //$bus_number variable can change to accomodate multiple bus drivers
       function startup() {
         //save php variables into a javascript variable
-        var bus_number = "<?php echo $bus_number ?>";
-        var route = "<?php echo $route ?>";
-        var starting_stop = "<?php echo $starting_stop ?>";
+        bus_number = "<?php echo $bus_number ?>";
+        route = "<?php echo $route ?>";
+        starting_stop = "<?php echo $starting_stop ?>";
 
         //insert into the hiddent input boxes
         document.getElementById("bus_number_current").value = bus_number;
@@ -176,16 +197,25 @@
         current_counter = parseInt(document.getElementById("starting_stop_current").value);
         next_counter = current_counter + 1;
 
+        //make sure counters stay in stop range
+        if(current_counter >= num_stops) {
+          current_counter = 0;
+          next_counter = 1;
+        }
+
+        if(next_counter >= num_stops) {
+          next_counter = 0;
+        }
+
         //set initial stops
         current_stop.textContent = stops[current_counter];
         next_stop.textContent = stops[next_counter];
+
+        //get initial alerts
+        updateAlerts();
+        bus_in_transit(bus_number, stops[current_counter], stops[next_counter]);
       }
 
-      var stops = ["Stop 1", "Stop 2", "Stop 3", "Stop 4", "Stop 5", "Stop 6"];
-      //switch current and next stop
-      var change_stop = 0;
-
-      const num_stops = stops.length;
       function switchStop() {
         //if toggled
         if(change_stop) 
@@ -195,6 +225,7 @@
           next_stop.textContent = stops[next_counter];
           stop_button.textContent = "In Transit";
           change_stop = 0;
+          bus_in_transit();
         } 
         
         //if untoggled
@@ -204,13 +235,14 @@
           current_counter++;
           next_counter++;
           stop_button.textContent = "Arrived at Stop";
-          if(current_counter == num_stops - 1) {
+          if(current_counter == num_stops) {
             current_counter = 0;
           }
-          if(next_counter == num_stops - 1) {
+          if(next_counter == num_stops) {
             next_counter = 0;
           }
           change_stop = 1;
+          bus_arrived();
         }
       }
 
@@ -225,10 +257,73 @@
         }
       });
 
-      window.addEventListener('beforeunload', function (e) {
-        e.preventDefault();
-        e.returnValue = 'Are you sure you want to leave this page? Your changes may be lost.';
-      });
+      // Define the function that updates the table
+      function updateAlerts() {
+        // Send an AJAX request to fetch the data
+        var xmlhttp = new XMLHttpRequest();
+        xmlhttp.onreadystatechange = function() {
+          if (this.readyState == 4 && this.status == 200) {
+            // Parse the JSON response
+            var data = JSON.parse(this.responseText);
+
+            // Build the HTML for the table body
+            var tbodyHtml = "";
+            for (var i = 0; i < data.length; i++) {
+              tbodyHtml += "<tr>";
+              tbodyHtml += "<td>" + data[i].title + "</td>";
+              tbodyHtml += "<td>" + data[i].details + "</td>";
+              tbodyHtml += "<td>" + data[i].dt + "</td>";
+              tbodyHtml += "</tr>";
+            }
+
+            // Update the table body
+            document.getElementById("alerts-table").getElementsByTagName("tbody")[0].innerHTML = tbodyHtml;
+          }
+        };
+        xmlhttp.open("GET", "get_alerts.php", true);
+        xmlhttp.send();
+      }
+
+      // Update the table every 5 seconds
+      setInterval(updateAlerts, 5000);
+
+      function bus_in_transit()
+      {
+        $.ajax({
+          type: 'POST',
+          url: 'bus_in_transit.php',
+          data: {
+            bus_number: bus_number,
+            current_stop: stops[current_counter],
+            next_stop: stops[next_counter],
+            arrived: 0
+          },
+          success: function(response) {
+            console.log(response);
+          },
+          error: function(xhr, status, error) {
+            console.error(xhr.responseText);
+          }
+        });
+      }
+
+      function bus_arrived()
+      {
+        $.ajax({
+          type: 'POST',
+          url: 'bus_arrived.php',
+          data: {
+            bus_number: bus_number,
+            arrived: 1
+          },
+          success: function(response) {
+            console.log(response);
+          },
+          error: function(xhr, status, error) {
+            console.error(xhr.responseText);
+          }
+        });
+      }
     </script>
 </body>
 </html>

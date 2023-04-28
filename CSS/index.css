@@ -57,7 +57,7 @@ header .logo
     transition: 0.5s;
     z-index: 2;
 
-    background-image: url("/media/pexels-george-becker-135161.jpg");
+    background: #111 url("/msu-shuttle/media/pexels-george-becker-135161.jpg") no-repeat fixed;
     background-repeat: no-repeat;
     background-attachment: fixed;
     background-size: cover;
