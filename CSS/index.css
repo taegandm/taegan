@@ -53,11 +53,10 @@ header .logo
     display: flex;
     justify-content: space-between;
     align-items: center;
-    background: #111;
     transition: 0.5s;
     z-index: 2;
 
-    background: #111 url("/msu-shuttle/media/pexels-george-becker-135161.jpg") no-repeat fixed;
+    background: #111 url("/SWE2/media/pexels-george-becker-135161.jpg") no-repeat fixed;
     background-repeat: no-repeat;
     background-attachment: fixed;
     background-size: cover;
@@ -212,8 +211,6 @@ header .logo
 }
 
 body {
-    background-image: url("/media/pexels-george-becker-135161.jpg");
-    background-repeat: no-repeat;
-    background-attachment: fixed;
+    background: #111 url("/media/pexels-george-becker-135161.jpg") no-repeat fixed;
     background-size: cover;
 }
