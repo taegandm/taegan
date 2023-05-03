@@ -19,7 +19,9 @@
                     src="../media/msu.png" alt="MSU Logo"></a>
             <span class="navbar-brand mb-0 h1 header-text display-1" id="title" style="font-weight: bold; font-size: 42px;">Student
                 Home</span>
-            <button type="button" class="btn btn-danger">Logout</button>
+            <form method="post" action="student_logout.php" id="logout-form">
+                <button type="submit" class="btn btn-danger">Logout</button>
+            </form>
         </div>
     </nav>
 
@@ -75,12 +77,56 @@
                 setInterval(updateRoute, 2000);
             });
         </script>   
-            <div class="row">
-                <h3><strong>Announcements</strong></h3>
-                <div class="alert alert-info" role="alert">
-                    Bus #2 currently delayed 5 minutes.
+            <div class="row subtitle mt-4">
+                <!--View Alert Section-->
+                <h5 id="current-title" class="display-6 text-center stop-text-size pb-2 subtitle">Recent Alerts</h5>
+                <div class="col-1"></div>
+                <div class="col-10">
+                    <table id="alerts-table" class="table table-striped table-bordered">
+                        <thead>
+                            <tr>
+                                <th scope="col">Title</th>
+                                <th scope="col">Details</th>
+                                <th scope="col">Date/Time</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <!-- The table body will be updated dynamically -->
+                        </tbody>
+                    </table>
                 </div>
+                <div class="col-1"></div>
             </div>
+            <script>
+                function updateAlerts() {
+                        // Send an AJAX request to fetch the data
+                        var xmlhttp = new XMLHttpRequest();
+                        xmlhttp.onreadystatechange = function () {
+                            if (this.readyState == 4 && this.status == 200) {
+                                // Parse the JSON response
+                                var data = JSON.parse(this.responseText);
+
+                                // Build the HTML for the table body
+                                var tbodyHtml = "";
+                                for (var i = 0; i < data.length; i++) {
+                                    tbodyHtml += "<tr>";
+                                    tbodyHtml += "<td>" + data[i].title + "</td>";
+                                    tbodyHtml += "<td>" + data[i].details + "</td>";
+                                    tbodyHtml += "<td>" + data[i].dt + "</td>";
+                                    tbodyHtml += "</tr>";
+                                }
+
+                                // Update the table body
+                                document.getElementById("alerts-table").getElementsByTagName("tbody")[0].innerHTML = tbodyHtml;
+                            }
+                        };
+                        xmlhttp.open("GET", "get_alerts.php", true);
+                        xmlhttp.send();
+                    }
+
+                    // Update the table every 5 seconds
+                    setInterval(updateAlerts, 5000);
+            </script>
         </div>
     </div>
     <section id="footer-section">
