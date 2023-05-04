@@ -39,7 +39,7 @@ CREATE TABLE `routes` (
 
 LOCK TABLES `routes` WRITE;
 /*!40000 ALTER TABLE `routes` DISABLE KEYS */;
-INSERT INTO `routes` VALUES (1,'University Hall','Lot 60','Transit',NULL),(2,'The Village','Lot 60','Transit',NULL),(3,'Russ Hall','Red Hawk Deck','University','Lot 60'),(4,'All Campus','','',NULL);
+INSERT INTO `routes` VALUES (1,'University Hall','Lot 60','Transit',NULL),(2,'The Village','Lot 60','Transit',NULL),(3,'Russ Hall','Red Hawk Deck','University','Lot 60'),(4,'University Hall','The Heights','Lot 60','Red Hawk Deck');
 /*!40000 ALTER TABLE `routes` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
