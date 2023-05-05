@@ -13,7 +13,8 @@
     <title>Registration</title>
 
     <!-- Icons font CSS-->
-    <link href="colorlib-regform-1/vendor/mdi-font/css/material-design-iconic-font.min.css" rel="stylesheet" media="all">
+    <link href="colorlib-regform-1/vendor/mdi-font/css/material-design-iconic-font.min.css" rel="stylesheet"
+          media="all">
     <link href="colorlib-regform-1/vendor/font-awesome-4.7/css/font-awesome.min.css" rel="stylesheet" media="all">
     <!-- Font special for pages-->
     <link href="https://fonts.googleapis.com/css?family=Roboto:100,100i,300,300i,400,400i,500,500i,700,700i,900,900i"
@@ -35,7 +36,7 @@
             <div class="card-heading"></div>
             <div class="card-body">
                 <h2 class="title">Registration Info</h2>
-                <form method="POST" action="enroll.php">
+                <form method="POST" action="enroll.php" method="post" id="myForm">
                     <div class="row row-space">
                         <div class="col-2">
                             <div class="input-group">
@@ -43,6 +44,7 @@
                                        name="first">
                                 <!--                                <i class="zmdi zmdi-calendar-note input-icon js-btn-calendar"></i>     In-Line calendar icon-->
                             </div>
+
                         </div>
                         <div class="col-2">
                             <div class="input-group">
@@ -52,7 +54,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="input-group">
+                    <div class="input-group email">
                         <input class="input--style-1" type="text" placeholder="EMAIL" name="email">
                     </div>
                     <div class="input-group">
@@ -85,7 +87,10 @@
                         </div>
                     </div>
                     <div class="p-t-20">
-                        <button class="btn btn--radius btn--green" type="submit">Submit</button>
+                        <button class="btn btn--radius btn--green" type="submit" onclick="return validateFormData()">
+                            Submit
+                        </button>
+
                     </div>
                 </form>
             </div>
@@ -103,7 +108,49 @@
 <!-- Main JS-->
 <script src="colorlib-regform-1/js/global.js"></script>
 
-</body><!-- This templates was made by Colorlib (https://colorlib.com) -->
+<script>
+    function validateFormData() {
+        const form = document.querySelector('#myForm');
+        const emailInput = form.querySelector('input[name="email"]');
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        const phoneInput = form.querySelector('input[name="number"]');
+        const phoneRegex = /^\d{10}$/;
+        const passwordInput = form.querySelector('input[name="password"]');
+        const confirmInput = form.querySelector('input[name="confirm"]');
+        const accountSelect = form.querySelector('select[name="account"]');
+
+        let isValid = true;
+
+        if (!emailRegex.test(emailInput.value)) {
+            alert('Please enter a valid email address.');
+            emailInput.focus();
+            isValid = false;
+        }
+
+        if (!phoneRegex.test(phoneInput.value)) {
+            alert('Please enter a valid 10-digit phone number.');
+            phoneInput.focus();
+            isValid = false;
+        }
+
+        if (passwordInput.value !== confirmInput.value) {
+            alert('Passwords do not match.');
+            confirmInput.focus();
+            isValid = false;
+        }
+
+        if (accountSelect.selectedIndex === 0) {
+            alert('Please select an account type.');
+            accountSelect.focus();
+            isValid = false;
+        }
+
+        return isValid;
+    }
+</script>
+
+
+</body>
 
 </html>
 <!-- end document-->

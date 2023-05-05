@@ -60,7 +60,7 @@
                     // Check if the 'error' parameter exists in the URL
                     if (isset($_GET['error'])) {
                         // If it does, display an error message
-                        echo '<p style="color: red;">Invalid username or password. Please try again.</p>';
+                        echo '<p style="color: red;">Invalid email or password. Please try again.</p>';
                     }
                     ?>
 
