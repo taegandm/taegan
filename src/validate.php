@@ -1,15 +1,13 @@
 <?php
+// Include the database connection file
+include __DIR__ . '../db_connect.php';
+
 $email = $_POST['email'];
 $pass = $_POST['pass'];
 
 
 // Connect to the database
-$host = "localhost";
-$username = "root";
-$password = "YOUR PASSWORD HERE";
-$database = "swe2";
-
-$conn = mysqli_connect($host, $username, $password, $database);
+$conn = OpenCon();
 if (!$conn) {
     die("Connection failed: " . mysqli_connect_error());
 }
@@ -31,18 +29,18 @@ if (password_verify($pass, $hash)) {
     if ($account_type == 'Student') {
         header('Location: student.html');
     } else if ($account_type == 'Driver') {
-        header('Location: driver.html');
+        header('Location: driver_login.php');
     } else if ($account_type == 'Admin') {
-        header('Location: admin.html');
+        header('Location: Admin.html');
     } else {
-        header('Location: login.html');
+        header('Location: login.php?error=1');
     }
 } else {
-    header('Location: login.html');
+    header('Location: login.php?error=1');
 }
 
 // Close the database connection
-mysqli_close($conn);
+CloseCon($conn);
 
 ?>
 

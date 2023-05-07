@@ -1,7 +1,9 @@
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
-	<title>Login V2</title>
+	<title>Login</title>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 <!--===============================================================================================-->	
@@ -26,6 +28,7 @@
 	<link rel="stylesheet" type="text/css" href="Login_v2/css/util.css">
 	<link rel="stylesheet" type="text/css" href="Login_v2/css/main.css">
 <!--===============================================================================================-->
+	<link rel="shortcut icon" href="/media/favicon.ico" type="image/x-icon">
 </head>
 <body>
 
@@ -53,6 +56,13 @@
 						<input class="input100" type="password" name="pass">
 						<span class="focus-input100" data-placeholder="Password"></span>
 					</div>
+                    <?php
+                    // Check if the 'error' parameter exists in the URL
+                    if (isset($_GET['error'])) {
+                        // If it does, display an error message
+                        echo '<p style="color: red;">Invalid email or password. Please try again.</p>';
+                    }
+                    ?>
 
 					<div class="container-login100-form-btn">
 						<div class="wrap-login100-form-btn">

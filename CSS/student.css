@@ -1,27 +1,24 @@
-table, th, td{
-    border: 1px solid;
+#map{
+   max-width: 100%;
+   height: auto;
+}
+#logo {
+    max-width: 50px;
+    min-width: 30px;
+    width: 4vw;
+    margin-left: 10px;
 }
 
-table{
-    width: 60%;
-}
-
-.w3-container {
-    height: auto;
-    width: 50vw;
-    width: 1000px;
-}
-
-footer {
-    width: 100%;
-    height: 50px;
-    bottom: 0;
-    border-top: 1px dotted black;
-    margin-top: 10px;
+.target {
     position: relative;
+    top: -60px;
 }
 
-img{
-    width: 600px;
-    height: 300px;
+.header-text {
+    font-size: 2rem;
+    font-weight: bold
+}
+
+.subtitle {
+    margin-top: 20px;
 }

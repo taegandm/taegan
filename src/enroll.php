@@ -1,15 +1,8 @@
 <?php
 
-// chnage $password so that it is your password or you will not be able to connect
-$hostname = 'localhost';
-$username = 'root';
-// you must remove your password from this line before committing it to the GitHub Repo
-// Reminder this repo is public so anyone can view your password if you do
-$password = 'YOUR PASSWORD HERE';
-$database = 'swe2';
-
-// create connection
-$conn = mysqli_connect($hostname, $username, $password, $database);
+// Include the database connection file
+include __DIR__ . '../db_connect.php';
+$conn = OpenCon();
 
 // check connection
 if (!$conn) {
@@ -40,7 +33,7 @@ if ($stmt->execute()) {
 
 // close the statement and connection
 $stmt->close();
-$conn->close();
+CloseCon($conn);
 ?>
 
 <!DOCTYPE html>
@@ -55,7 +48,7 @@ $conn->close();
 
 //   At this point the database has been updated and the user should be routed back to the login page
     function returnHome(){
-        window.location.href = "./login.html";
+        window.location.href = "login.php";
     }
 </script>
 </body>
