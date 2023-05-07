@@ -1,19 +1,22 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.6.0/js/bootstrap.min.js"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.6.0/css/bootstrap.min.css">
+
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous">
-<!--    -->
-    <link href="..\CSS\driver.css" rel="stylesheet" type="text/css"/>
-    <link rel="shortcut icon" href="/media/favicon.ico" type="image/x-icon">
+    <link href="..\media\msu.png" rel="stylesheet">
+    <link href="..\\CSS\driver.css" rel="stylesheet" type="text/css"/>
 </head>
 <body>
     <nav class="navbar navbar-dark sticky-top color-msu">
         <div class="container-fluid">
-          <a class="navbar-brand display-1 header-text" href="#"><img id="logo" src="../media/msu.png" alt="MSU Logo">Admin Home</a>
+          <a class="navbar-brand display-1 header-text" href="#"><img id="logo" src="..\media\msu.png" alt="MSU Logo">Admin Home</a>
           <div class="navbar-nav">
             <a class="nav-item nav-link" href="#">Logout</a>
           </div>       
@@ -24,17 +27,11 @@
         <div class="container-fluid">
             <div class="row g-2">
                 <div class="col-md-6 col-sm-12 g-2 text-center">
-                    <h5 id="current-title" class="display-6 text-left stop-text-size pb-2 subtitle">Current Stop: [STOP]</h5>
-                    <h5 id="next-title" class="display-6 text-left stop-text-size pb-2">Next Stop: [STOP]</h5>
-                    <button id="stop-button" type="button" class="btn btn-color-msu-scaling active col-6 mt-3" data-bs-toggle="button">Arrived at Stop</button>
-                    <button id="accounts-button" type="button" class="btn btn-color-msu-scaling active col-6 mt-3" data-bs-toggle="button">View Accounts</button>
-                </div>
-                <div class="col-md-6 col-sm-12 g-2 text-center">
                     <!-- Button trigger modal -->
-                    <h5 id="current-title" class="display-6 text-left stop-text-size pb-2 subtitle">Manage Alerts</h5>
-                    <button type="button" class="btn btn-color-msu-scaling col-6" data-bs-toggle="modal" data-bs-target="#exampleModal">
-                        Create Alert
-                    </button>
+                    <h5 id="current-title" class="display-6 text-left stop-text-size pb-2 subtitle">Manage Accounts</h5>
+                    <button type="button" class="btn btn-danger btn-block" style="width: 300px; margin-left: -320px;" onclick="location.href='C:/Users/User/OneDrive/Documents/MSU-Shuttle-main/MSU-Shuttle-main/src/Login_v2/AdminAccounts.html'">
+                      Accounts
+                  </button>                                                                          
                 <div class="col-md-6 col-sm-12 g-2 text-center">
                         <!-- Button trigger modal -->
                         <h5 id="current-title" class="display-6 text-left stop-text-size pb-2 subtitle">Manage Routes</h5>
@@ -68,6 +65,10 @@
   text-decoration: none;
   display: block;
 }
+.selected {
+  background-color: #007bff;
+  color: #fff;
+}
 
 .dropdown-content a:hover {background-color: #ddd;}
 
@@ -77,48 +78,108 @@
 </style>
 </head>
 <body>
-<p>Move the mouse over the button to select the stops.</p>
 <style>
     .dropdown:first-child {
         margin-bottom: 10px;
     }
 </style>
 
-<div class="dropdown">
-  <button class="dropbtn">Start</button>
-  <div class="dropdown-content">
-    <a href="#">University Hall</a>
-    <a href="#">Lot 60</a>
-    <a href="#">Red Hawk Deck</a>
-  </div>
-</div>
-<div class="dropdown">
-  <button class="dropbtn">Finish</button>
-  <div class="dropdown-content">
-    <a href="#">University Hall</a>
-    <a href="#">Lot 60</a>
-    <a href="#">Red Hawk Deck</a>
-  </div>
-</div>
+<button type="button" class="btn btn-danger btn-block" data-toggle="modal" data-target="#exampleModal">
+  Add Route
+</button>
 
-                        <button type="button" class="btn btn-color-msu-scaling col-6" data-bs-toggle="modal" data-bs-target="#exampleModal">
-                            Submit
-                    </button>
+
                     
-                    <!-- Modal -->
-                    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                        <div class="modal-dialog">
+                    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                      <div class="modal-dialog" role="document">
                         <div class="modal-content">
-                            <div class="modal-header">
-                                <h5 class="modal-title" id="exampleModalLabel">New Route</h5>
-                            </div>
-                            <div class="btn-group" role="group" aria-label="Basic example">
-                                <button type="button" class="btn btn-primary">Left</button>
-                                <button type="button" class="btn btn-primary">Middle</button>
-                                <button type="button" class="btn btn-primary">Right</button>
-                              </div>
+                          <div class="modal-header">
+                            <h5 class="modal-title">Add a Route</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                              <span aria-hidden="true">&times;</span>
+                            </button>
+                          </div>
+                          <div class="modal-body">
+                            <style>
+                              .select {
+                                display: flex;
+                                flex-direction: row;
+                              }
+                              
+                              .select option {
+                                display: inline-block;
+                              }
+                            </style>
+                            <h4>First Stop</h4>
+                            <select class="select" multiple>
+                              <option value="UH">University Hall</option>
+                              <option value="RHD">Red Hawk Deck</option>
+                              <option value="L60">Lot 60</option>
+                              <option value="The Village">The Village</option>
+                              <option value="NJ Transit Station">NJ Transit Station</option>
+                              <option value="Sinatra Hall">Sinatra Hall</option>
+                              <option value="Hawk Crossings">Hawk Crossing</option>
+                              <option value="The Heights">The Heights</option>
+                              <option value="CarParc Diem">CarParc Diem</option>
+                            </select>
+                            <h4>Second Stop</h4>
+                            <select class="select" multiple>
+                              <option value="UH">University Hall</option>
+                              <option value="RHD">Red Hawk Deck</option>
+                              <option value="L60">Lot 60</option>
+                              <option value="The Village">The Village</option>
+                              <option value="NJ Transit Station">NJ Transit Station</option>
+                              <option value="Sinatra Hall">Sinatra Hall</option>
+                              <option value="Hawk Crossings">Hawk Crossing</option>
+                              <option value="The Heights">The Heights</option>
+                              <option value="CarParc Diem">CarParc Diem</option>
+                            </select>
+                            <h4>Third Stop</h4>
+                            <select class="select" multiple>
+                              <option value="UH">University Hall</option>
+                              <option value="RHD">Red Hawk Deck</option>
+                              <option value="L60">Lot 60</option>
+                              <option value="The Village">The Village</option>
+                              <option value="NJ Transit Station">NJ Transit Station</option>
+                              <option value="Sinatra Hall">Sinatra Hall</option>
+                              <option value="Hawk Crossings">Hawk Crossing</option>
+                              <option value="The Heights">The Heights</option>
+                              <option value="CarParc Diem">CarParc Diem</option>
+                            </select>
+                            <h4>Fourth Stop</h4>
+                            <select class="select" multiple>
+                              <option value="UH">University Hall</option>
+                              <option value="RHD">Red Hawk Deck</option>
+                              <option value="L60">Lot 60</option>
+                              <option value="The Village">The Village</option>
+                              <option value="NJ Transit Station">NJ Transit Station</option>
+                              <option value="Sinatra Hall">Sinatra Hall</option>
+                              <option value="Hawk Crossings">Hawk Crossing</option>
+                              <option value="The Heights">The Heights</option>
+                              <option value="CarParc Diem">CarParc Diem</option>
+                            </select>
+                            <h4>Fifth Stop</h4>
+                            <select class="select" multiple>
+                              <option value="UH">University Hall</option>
+                              <option value="RHD">Red Hawk Deck</option>
+                              <option value="L60">Lot 60</option>
+                              <option value="The Village">The Village</option>
+                              <option value="NJ Transit Station">NJ Transit Station</option>
+                              <option value="Sinatra Hall">Sinatra Hall</option>
+                              <option value="Hawk Crossings">Hawk Crossing</option>
+                              <option value="The Heights">The Heights</option>
+                              <option value="CarParc Diem">CarParc Diem</option>
+                            </select>
+                          
+                          
+                          <div class="modal-footer">
+                            <button type="button" class="btn btn-primary">Save changes</button>
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                          </div>
                         </div>
+                        
                         </div>
+                      </div>
                     </div>
 
 
